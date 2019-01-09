@@ -1,0 +1,5 @@
+{
+	"roiPairs":	"23 95 2 8\n1 2 12 34\n8 3 5\n4 5",
+	"atlas":  "/N/dc2/projects/lifebid/hayashis/fordan/testdata/parc/parc",
+   	"smoothKernel": 3
+}
