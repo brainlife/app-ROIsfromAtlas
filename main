@@ -6,7 +6,7 @@
 set -e
 set -x
 
-#time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/bsc_GenROIfromPairStringList_BL
+time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/bsc_GenROIfromPairStringList_BL
 
 #move ./roi to ./rois/rois
 rm -rf rois
