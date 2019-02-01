@@ -4,6 +4,16 @@
 #PBS -V
 
 set -e
+set -x
 
-time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/bsc_GenROIfromPairStringList_BL
+#time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/bsc_GenROIfromPairStringList_BL
 
+#move ./roi to ./rois/rois
+rm -rf rois
+mkdir -p rois
+mv roi rois/rois
+
+if [ -z "$(ls -A ./rois/rois)" ]; then
+    echo "didn't produce any rois"
+    exit 1
+fi
