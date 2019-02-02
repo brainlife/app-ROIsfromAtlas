@@ -8,6 +8,11 @@ set -x
 
 time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/bsc_GenROIfromPairStringList_BL
 
+if [ -n "$(ls -A ./roi)" ]; then
+    echo "roi output found"
+    exit 1
+fi
+
 #move ./roi to ./rois/rois
 rm -rf rois
 mkdir -p rois
