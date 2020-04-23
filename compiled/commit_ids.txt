@@ -1,9 +1,9 @@
 /N/u/hayashis/git/vistasoft
-commit d1a82748966a78fafb9f6423f4ba927e3f3efe3e
+commit 61c9c2f82865882220a4116d5dd9c5ef2e59d26b
 Author: Soichi Hayashi <hayashis@iu.edu>
-Date:   Thu Apr 23 15:07:33 2020 +0000
+Date:   Thu Apr 23 20:12:58 2020 +0000
 
-    passing bb to mrAnatXformCoords in acpc coordinates
+    fixed how dtiRoiToImg does the out-of-bb cleanup
 /N/u/brlife/git/jsonlab
 commit 31eabbaab227d500786aaa472b9f5bbd9f082c61
 Author: Qianqian Fang <fangqq@gmail.com>
