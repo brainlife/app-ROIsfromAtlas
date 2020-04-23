@@ -1,10 +1,9 @@
 /N/u/hayashis/git/vistasoft
-commit bf3f55fafc835367b33584fddb8f580864db73c4
+commit d1a82748966a78fafb9f6423f4ba927e3f3efe3e
 Author: Soichi Hayashi <hayashis@iu.edu>
-Date:   Tue Apr 21 01:45:30 2020 +0000
+Date:   Thu Apr 23 15:07:33 2020 +0000
 
-    updated nearpoints mex code to handle half-precision destination
-    coordinates
+    passing bb to mrAnatXformCoords in acpc coordinates
 /N/u/brlife/git/jsonlab
 commit 31eabbaab227d500786aaa472b9f5bbd9f082c61
 Author: Qianqian Fang <fangqq@gmail.com>
