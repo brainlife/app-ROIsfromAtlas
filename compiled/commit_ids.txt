@@ -1,28 +1,25 @@
-/N/u/brlife/git/vistasoft
-commit cf75f1a8c037382d6a157f0a7b683a3fd424ee4c
-Merge: 8bea0b7 7e4a5c5
-Author: rokers <rokers@gmail.com>
-Date:   Fri Jul 13 17:13:01 2018 -0400
-
-    Merge branch 'master' of https://github.com/vistalab/vistasoft
-/N/u/brlife/git/jsonlab
-commit 474d8c824800b5f2109c08f989085cb961acdbe3
-Merge: ae7a5d9 38b24fb
-Author: Qianqian Fang <fangqq@gmail.com>
-Date:   Wed Sep 6 13:01:57 2017 -0400
-
-    Merge pull request #41 from dasantonym/master
-    
-    added package.json to be able to intall via npm package manager
-/N/u/brlife/git/wma_tools
-commit 0889f248445d7a474d98a0ee8dd5ff8d4d3158cf
-Author: Daniel Bullock <dnbulloc@i16.red.uits.iu.edu>
-Date:   Sat Feb 2 15:46:24 2019 -0500
-
-    more reports
-/N/u/brlife/git/encode
-commit 538a73bc4f8b4d94545bc2dfe434fec55e0c7a95
+/N/u/hayashis/git/vistasoft
+commit bf3f55fafc835367b33584fddb8f580864db73c4
 Author: Soichi Hayashi <hayashis@iu.edu>
-Date:   Tue Jan 22 10:14:41 2019 -0500
+Date:   Tue Apr 21 01:45:30 2020 +0000
 
-    fixed the issue where fiber goes missing.
+    updated nearpoints mex code to handle half-precision destination
+    coordinates
+/N/u/brlife/git/jsonlab
+commit 31eabbaab227d500786aaa472b9f5bbd9f082c61
+Author: Qianqian Fang <fangqq@gmail.com>
+Date:   Tue Aug 20 12:20:38 2019 -0400
+
+    fix table transpose issue for uniform type tables
+/N/u/brlife/git/wma_tools
+commit d33567f769f78861522ffcc20ac5a422405f718f
+Author: Daniel Bullock <dnbulloc@iu.edu>
+Date:   Tue Apr 14 19:33:15 2020 -0400
+
+    initial draft of volume proportion and bounding box computation
+/N/u/brlife/git/encode
+commit 034825b0c304679d36c41906dfb4c9850cb64eae
+Author: francopestilli <frakkopesto@gmail.com>
+Date:   Sun Mar 1 15:25:30 2020 -0500
+
+    BUG: Fixed a size error in one of the calls. This was the result of the previous commit.
