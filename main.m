@@ -39,51 +39,53 @@ function main()
  end
 
 %config = loadjson('/N/dc2/projects/lifebid/HCP/Dan/GitStoreDir/ROIs2ROIsSegment/config.json');
-config = loadjson('config.json')
+config = loadjson('config.json_sample')
 
-ROIstring=config.roiPairs;
 smoothKernel=config.smoothKernel;
 
 if isfield(config,'atlas')
-       atlas=config.atlas
+       atlasORroiDir=niftiRead(config.atlas)
+       refImg=atlasORroiDir;
+end
+
+if ~isfield(config,'roiPairs')
+    ROIstring=[unique(atlasORroiDir.data)];
+    stringCells=num2cell(ROIstring);
+elseif isempty(config.roiPairs)
+    ROIstring=[unique(atlasORroiDir.data)];
+    stringCells=num2cell(ROIstring);
+else
+    ROIstring=config.roiPairs;
+    fprintf('Generating ROIs for the following indicies: \n %s',ROIstring);
+    %just in case
+    ROIstring=strrep(ROIstring,'\n',newline);
+    ROIstring=strrep(ROIstring,';',newline);
+    stringCells = splitlines(ROIstring);
 end
 
 if isfield(config,'ROI')
-      ROIdir=config.ROI
+      atlasORroiDir=config.ROI
+      %I guess we can assume that all of the input niftis have the same
+      %formatting?  Just point to the first one?
+      roiDirContent=dir(atlasORroiDir);
+      fileNames={roiDirContent.name};
+      niftiNames=fileNames(contains(fileNames,'.nii.gz'));
+      %point to the first one
+      refImg=fullfile(atlasORroiDir,niftiNames{1});
 end
 
 %% gen ROI
-fprintf('Generating ROIs for the following indicies: \n %s',ROIstring);
-%just in case
-ROIstring=strrep(ROIstring,'\n',newline);
-ROIstring=strrep(ROIstring,';',newline);
-stringCells = splitlines(ROIstring);
+
 mkdir('roi/')
 
-for iROIs=1:length(stringCells)
-    ROInums=str2num(stringCells{iROIs});
+outputROIS=amalgumROIsFromInput(atlasORroiDir,stringCells,smoothKernel)
 
-    %% run the merge roi function
-    if ~notDefined('atlas')
-        disp('------------------------------')
-        disp(['ROInums' num2str(ROInums)])
-        disp(atlas)
-        mergedROI =bsc_roiFromAtlasNums(atlas,ROInums, smoothKernel)
-        %disp(mergedROI.coords)
-        currROIName=fullfile(pwd,strcat('/roi/ROI',num2str(iROIs),'.nii.gz'))
-        atlas
-        [~, ~]=dtiRoiNiftiFromMat (mergedROI,atlas,currROIName,1)
-    elseif ~notDefined('ROIdir')
-        for iROInums=1:length(ROInums)
-            niiPaths{iROInums}=strcat(ROIdir,'ROI',num2str(ROInums(iROInums)),'.nii.gz');
-        end
-        if length(ROInums)>1
-            
-            mergedROI = niftiMerge(niiPaths, strcat('rois/ROI',strrep(num2str(ROInums),'  ','_'),'.nii.gz'));
-        end
-        currROIName=fullfile(pwd,strcat('/roi/ROI',num2str(iROIs),'.nii.gz'));
-        fprintf('\n saving %s',currROIName)
-        niftiWrite(mergedROI,currROIName)
-    end
+for iROIs=1:length(outputROIS)
+    %maybe we don't need to append .nii.gz, I don't know
+    currROIName=fullfile(pwd,strcat('/roi/',outputROIS{iROIs}.name,'.nii.gz'));
+    %fprintf('\n saving %s',currROIName)
+    [~, ~] = dtiRoiNiftiFromMat(outputROIS{iROIs},refImg,currROIName,true)
+
 end
+
 end
