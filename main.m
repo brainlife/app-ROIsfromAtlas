@@ -39,7 +39,7 @@ function main()
  end
 
 %config = loadjson('/N/dc2/projects/lifebid/HCP/Dan/GitStoreDir/ROIs2ROIsSegment/config.json');
-config = loadjson('config.json_sample')
+config = loadjson('config.json')
 
 smoothKernel=config.smoothKernel;
 
