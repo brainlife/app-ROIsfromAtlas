@@ -100,7 +100,7 @@ This app outputs a [standard ROI data output](https://brainlife.io/datatype/5be9
 
 #### Product.json
 
-Not relevant for this App as it does not geenrate processed data. 
+Not relevant for this App as it does not genrate processed data. 
 
 ### Dependencies
 
