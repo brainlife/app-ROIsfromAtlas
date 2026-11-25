@@ -2,6 +2,35 @@
 [![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.140-blue.svg)](https://doi.org/10.25663/brainlife.app.140)
 
 # app-ROIsfromAtlas
+
+<!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
+
+**Extracts single or merged ROIs as NIfTI files from a volumetric parcellation by label index, with optional smoothing/inflation, using wma_tools.**
+
+For each line (or semicolon-separated group) in roiPairs, merges the listed parcellation indices into one ROI with bsc_roiFromAtlasNums and writes rois/ROI<n>.nii.gz. Output ROIs are in the same space as the input parcellation, so make sure it matches the data you will use them with.
+
+Run it on brainlife.io: [https://doi.org/10.25663/brainlife.app.140](https://doi.org/10.25663/brainlife.app.140)
+
+| Input | Datatype | Required | Description |
+|---|---|---|---|
+| `atlas` | `neuro/parcellation/volume` | yes | Volumetric parcellation (NIfTI) with its label key. Must be in the space where the ROIs will be used. |
+
+| Output | Datatype | Description |
+|---|---|---|
+| `rois` | `neuro/rois` | ROIs (ROI1.nii.gz, ROI2.nii.gz, ...), one per entry of roiPairs, in the space of the parcellation. |
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `roiPairs` | string |  | This is where you enter in the indexes for the parcellation regions you would like to convert into ROIs (disregard the "pairs" implication). Must be in appropriate format, for example: 23 95 2 8 1 2 12 34 8 3 5 4 5 236 86 72 12 55 line breaks separate ROIs |
+| `smoothKernel` | number | `1` | Smoothing Kernel for ROI. Odd, whole number values only. Values larger than 1 result in ROI inflation. 0 performs no inflation. https://www.mathworks.com/help/matlab/ref/smooth3.html |
+
+Runtime: container `brainlife/mcr:r2019a`; 8 CPUs; 18 h walltime.
+
+Please cite:
+- Avesani P, McPherson B, Hayashi S, et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. Sci Data 6, 69 (2019). [doi:10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
+
+<!-- brainlife-app:end -->
+
 Extract single, multiple, or combinations of ROIs from a parcellation/atlas by using the index (number) of the entires in the atlas.  See User Input for specific instructions on how to do this.
 
 **NOTE** all output is in the same space as the input atlas.  Thus, **users should take care to ensure that their input atlas is in the appropriate coordinate space for their intended application**.  Alternatively, one can ensure that downstream data objects (i.e. [DWI](https://brainlife.io/datatype/58c33c5fe13a50849b25879b) or [tractograms](https://brainlife.io/datatype/5907d922436ee50ffde9c549) are in the same coordinate space as this atlas (and, by extension the structure it was derived from as well).
