@@ -1,143 +1,172 @@
-[![Abcdspec-compliant](https://img.shields.io/badge/ABCD_Spec-v1.1-green.svg)](https://github.com/brain-life/abcd-spec)
-[![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.140-blue.svg)](https://doi.org/10.25663/brainlife.app.140)
+<h1 align="center">Generate ROIs from an atlas</h1>
 
-# app-ROIsfromAtlas
+<p align="center">
+  Single, multiple or merged regions of interest, as NIfTI files, from a volumetric parcellation selected by label index.
+</p>
+
+<p align="center">
+  <a href="https://github.com/brainlife/abcd-spec"><img src="https://img.shields.io/badge/ABCD_Spec-v1.1-green.svg" alt="ABCD Spec v1.1"></a>
+  <a href="https://doi.org/10.25663/brainlife.app.140"><img src="https://img.shields.io/badge/Brainlife-brainlife.app.140-blue.svg" alt="Run on brainlife.io"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-lightgrey.svg" alt="MIT license"></a>
+</p>
+
+## 🧠 At a glance
 
 <!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
 
-**Extracts single or merged ROIs as NIfTI files from a volumetric parcellation by label index, with optional smoothing/inflation, using wma_tools.**
+> **Extracts single or merged ROIs as NIfTI files from a volumetric parcellation by label index, with optional smoothing/inflation, using wma_tools.**
 
 For each line (or semicolon-separated group) in roiPairs, merges the listed parcellation indices into one ROI with bsc_roiFromAtlasNums and writes rois/ROI<n>.nii.gz. Output ROIs are in the same space as the input parcellation, so make sure it matches the data you will use them with.
 
-Run it on brainlife.io: [https://doi.org/10.25663/brainlife.app.140](https://doi.org/10.25663/brainlife.app.140)
+| | |
+|---|---|
+| 📥 **Inputs** | `neuro/parcellation/volume` |
+| 📤 **Outputs** | `neuro/rois` |
+| 🐳 **Container** | `brainlife/mcr:r2019a` |
+| ⚙️ **Resources** | 8 CPUs · 18 h walltime |
+| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.140](https://doi.org/10.25663/brainlife.app.140) |
+
+#### 📥 Inputs
 
 | Input | Datatype | Required | Description |
 |---|---|---|---|
 | `atlas` | `neuro/parcellation/volume` | yes | Volumetric parcellation (NIfTI) with its label key. Must be in the space where the ROIs will be used. |
 
+#### 📤 Outputs
+
 | Output | Datatype | Description |
 |---|---|---|
 | `rois` | `neuro/rois` | ROIs (ROI1.nii.gz, ROI2.nii.gz, ...), one per entry of roiPairs, in the space of the parcellation. |
+
+<details>
+<summary><b>⚙️ Parameters</b> (2)</summary>
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `roiPairs` | string |  | This is where you enter in the indexes for the parcellation regions you would like to convert into ROIs (disregard the "pairs" implication). Must be in appropriate format, for example: 23 95 2 8 1 2 12 34 8 3 5 4 5 236 86 72 12 55 line breaks separate ROIs |
 | `smoothKernel` | number | `1` | Smoothing Kernel for ROI. Odd, whole number values only. Values larger than 1 result in ROI inflation. 0 performs no inflation. https://www.mathworks.com/help/matlab/ref/smooth3.html |
 
-Runtime: container `brainlife/mcr:r2019a`; 8 CPUs; 18 h walltime.
-
-Please cite:
-- Avesani P, McPherson B, Hayashi S, et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. Sci Data 6, 69 (2019). [doi:10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
+</details>
 
 <!-- brainlife-app:end -->
 
-Extract single, multiple, or combinations of ROIs from a parcellation/atlas by using the index (number) of the entires in the atlas.  See User Input for specific instructions on how to do this.
+> [!NOTE]
+> All output is in the same space as the input atlas. Make sure the input atlas is in the appropriate coordinate space for your intended application, or that downstream data (for example [DWI](https://brainlife.io/datatype/58c33c5fe13a50849b25879b) or [tractograms](https://brainlife.io/datatype/5907d922436ee50ffde9c549)) are in the same space as the atlas and the structure it was derived from.
 
-**NOTE** all output is in the same space as the input atlas.  Thus, **users should take care to ensure that their input atlas is in the appropriate coordinate space for their intended application**.  Alternatively, one can ensure that downstream data objects (i.e. [DWI](https://brainlife.io/datatype/58c33c5fe13a50849b25879b) or [tractograms](https://brainlife.io/datatype/5907d922436ee50ffde9c549) are in the same coordinate space as this atlas (and, by extension the structure it was derived from as well).
+## 🚀 Running the App
 
-### Authors
-- Daniel Bullock (dnbulloc@iu.edu)
+### ☁️ On brainlife.io
 
-### Contributors
-- Daniel Bullock (dnbulloc@iu.edu)
-- Soichi Hayashi (hayashis@iu.edu)
+Open the App at [doi.org/10.25663/brainlife.app.140](https://doi.org/10.25663/brainlife.app.140), choose a [parcellation](https://brainlife.io/datatype/5c1a7489f9109beac4a88a1f) (`neuro/parcellation/volume`) from your project, enter the label indices in `roiPairs`, and press **Execute**. The App writes a [`neuro/rois`](https://brainlife.io/datatype/5be9ea0315a8683a39a1ebd9) dataset to your project. To find which label belongs to which structure, look at the `key.txt` or `label.json` file of the parcellation.
 
-### Project Director
-- Franco Pestilli (franpest@indiana.edu)
+#### `roiPairs`
 
-### Funding
-[![NSF-BCS-1734853](https://img.shields.io/badge/NSF_BCS-1734853-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1734853)
-[![NSF-BCS-1636893](https://img.shields.io/badge/NSF_BCS-1636893-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1636893)
-[![NSF-ACI-1916518](https://img.shields.io/badge/NSF_ACI-1916518-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1916518)
-[![NSF-IIS-1912270](https://img.shields.io/badge/NSF_IIS-1912270-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1912270)
-[![NIH-NIBIB-R01EB029272](https://img.shields.io/badge/NIH_NIBIB-R01EB029272-green.svg)](https://grantome.com/grant/NIH/R01-EB029272-01)
-[![NIMH-T32-5T32MH103213-05](https://img.shields.io/badge/NIMH_T32-5T32MH103213--05-blue.svg)](https://projectreporter.nih.gov/project_info_description.cfm?aid=9725739)
+Each line of this field (disregard the "pairs" in the name) is a request for one output ROI, so a request that spans 5 lines returns 5 ROIs. Lines can also be separated with `;`.
 
-### References 
-[Avesani, P., McPherson, B., Hayashi, S. et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. Sci Data 6, 69 (2019).](https://doi.org/10.1038/s41597-019-0073-y)
+Each line is a series of label indices separated by spaces. A single line `1 2 3 4 5` returns **one** ROI that merges the voxels of labels 1, 2, 3, 4 and 5. To get one ROI per label, put each index on its own line:
 
-## Running the App 
+```text
+1
+2
+3
+4
+5
+```
 
-### On Brainlife.io
+A request such as
 
-Visit https://doi.org/10.25663/brainlife.app.140 to run this app on the brainlife.io platform.  Requires a [parcellation](https://brainlife.io/datatype/5c1a7489f9109beac4a88a1f) type input.
+```text
+21 5 16 32 8
+21 77 1 2
+3
+55 18 9
+132 64 199 100 7 11
+```
 
-### Running Locally (on your machine) using singularity & docker
+returns 5 ROIs, each merging all the labels on its line.
 
-Because this is compiled code which runs on singularity, you can download the repo and run it locally with minimal setup.  Ensure that you have singularity and use the main (not main.m) file with an appropriate (for your local file structure) config.json file.
+#### `smoothKernel`
 
-### Running Locally (on your machine)
+Whether, and how much, to inflate the ROIs after they are extracted, using a Gaussian smoothing kernel ([`smooth3`](https://www.mathworks.com/help/matlab/ref/smooth3.html)). A value of 0 or 1 means no inflation (default 1). An **odd integer** applies a Gaussian inflation with that diameter; **even values do not work**.
 
-Pull the [wma toolkit repo](https://github.com/DanNBullock/wma_tools)
-Ensure that [vistasoft](https://github.com/vistalab/vistasoft)and [spm](https://www.fil.ion.ucl.ac.uk/spm/software/) are installed.
+### 💻 Locally
 
-Rather than running the main or main.m, simply use [the workhorse function for this app](https://github.com/brainlife/app-ROIsfromAtlas/blob/b2f90c9edade329d9f69020461e18f01cd6fc7bd/main.m#L81), which can be found [here](https://github.com/DanNBullock/wma_tools/blob/master/ROI_Tools/amalgumROIsFromInput.m) in the [wma_tools repo](https://github.com/DanNBullock/wma_tools): 
+You need [Singularity/Apptainer](https://apptainer.org/). The App is compiled MATLAB code and runs in the `brainlife/mcr:r2019a` container, so it can run locally with minimal setup.
 
-The documentation within that app should be sufficent to make use of the functionality.
+1. Clone this repository and check out the registered version (`git checkout 1.0`).
+2. Create `config.json` with the path to your parcellation and your requests (see `config.json_sample`):
 
-### Sample Datasets
+   ```json
+   {
+       "atlas": "/input/parcellation/parc.nii.gz",
+       "roiPairs": "23 95 2 8\n1 2 12 34\n8 3 5\n4 5",
+       "smoothKernel": 3
+   }
+   ```
 
-Visit brainlife.io and explore [projects](https://brainlife.io/projects) to find projects which contain [parcellations](https://brainlife.io/datatype/5c1a7489f9109beac4a88a1f)
+3. Run the App with `main` (not `main.m`):
 
-## Input
+   ```bash
+   ./main
+   ```
 
-This app requires that a [parcellation](https://brainlife.io/datatype/5c1a7489f9109beac4a88a1f) type input be passed to it.
+Without Singularity, you can use the workhorse function of this App directly in MATLAB: [`amalgumROIsFromInput.m`](https://github.com/DanNBullock/wma_tools/blob/master/ROI_Tools/amalgumROIsFromInput.m) in [wma_tools](https://github.com/DanNBullock/wma_tools), with [vistasoft](https://github.com/vistalab/vistasoft) and [SPM](https://www.fil.ion.ucl.ac.uk/spm/software/) installed. Its documentation describes how to use it.
 
-### User Input
+### 🧪 Sample data
 
-### roiPairs
+Explore [projects](https://brainlife.io/projects) on brainlife.io to find projects that contain [parcellations](https://brainlife.io/datatype/5c1a7489f9109beac4a88a1f).
 
-This input is where the user specifies the ROIs that they would like extracted from the input atlas/parcellation.  
+## 📦 Outputs
 
-Each row of this field constitutes a request for an ROI output.  As such, if your request spans 5 lines, you will receive 5 output ROIs.
+```text
+rois/
+└── rois/
+    ├── ROI1.nii.gz   ROI for the first line of roiPairs
+    ├── ROI2.nii.gz   ROI for the second line
+    └── …
+```
 
-What you type on each row determines what each of these output ROIS contains.  The specific user input is in the form of a series of integers.  For example "1 2 3 4 5" (without quotes).  An input of this type (a single line with "1 2 3 4 5" (without quotes)) would return **a single output ROI** which represents the merging of whatever voxel labels are associated with 1 2 3 4 and 5 in the input parcellation.
+## 🩺 Troubleshooting
 
-**NOTE** to determine which labels are associated with which structure in a parcellation/atlas, refer back to the key.txt or label.json files in the [parcellation data object](https://brainlife.io/datatype/5c1a7489f9109beac4a88a1f)
+- **`didn't produce any rois`**: no ROI files were written. Check that the indices in `roiPairs` exist in the parcellation.
+- **Inflation fails**: `smoothKernel` must be 0, 1 or an odd integer.
 
-To request multiple output ROIs split your request across multiple lines.  For example an input request that looks like this:
+## 📚 Citing
 
-1  
-2  
-3  
-4  
-5  
+> [!TIP]
+> If you use this App in your work, please cite the App, the software it builds on and brainlife.io (below). GitHub's **Cite this repository** button gives the App citation in APA and BibTeX.
 
-Would return 5 separate [ROIs (in the output ROI directory)](https://brainlife.io/datatype/5be9ea0315a8683a39a1ebd9), each of which features a single label from the input parcellation/atlas.
+- Avesani P, McPherson B, Hayashi S, et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. *Scientific Data* 6:69 (2019). [doi:10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
+- Generate ROIs from an atlas. brainlife.io App. [doi:10.25663/brainlife.app.140](https://doi.org/10.25663/brainlife.app.140)
+- Bullock et al. Associative white matter connecting the dorsal and ventral posterior human cortex. *Brain Structure and Function* 224:2631-2660 (2019). [doi:10.1007/s00429-019-01907-8](https://doi.org/10.1007/s00429-019-01907-8)
+- Hayashi S, Caron BA, Heinsfeld AS, et al. brainlife.io: a decentralized and open-source cloud platform to support neuroscience research. *Nature Methods* 21:809–813 (2024). [doi:10.1038/s41592-024-02237-2](https://doi.org/10.1038/s41592-024-02237-2)
 
-Alternatively an input request that looks like this:
+## 👥 Authors
 
-21 5 16 32 8  
-21 77 1 2  
-3  
-55 18 9  
-132 64 199 100 7 11  
+- Daniel Bullock
+- Franco Pestilli (project director)
 
-Would return 5 separate ROIs, each of which constitutes a merging of all labels on the respective lines.
+**Contributors:** Soichi Hayashi
 
-### smoothKernel
+## 💰 Funding
 
-The smoothKernel parameter input allows you to specify whether (and to what degree) you would like your ROIs to be inflated after they are extracted from the source parcellation/atlas.  This inflation is acheived via the application of a gaussian smoothing kernel.
+[![Wellcome-226486/Z/22/Z](https://img.shields.io/badge/Wellcome-226486%2FZ%2F22%2FZ-purple.svg)](https://wellcome.org/)
+[![NIH-NINDS-U24NS140384](https://img.shields.io/badge/NIH_NINDS-U24NS140384-green.svg)](https://reporter.nih.gov/project-details/11261037)
+[![NIH-NINDS-UM1NS132207](https://img.shields.io/badge/NIH_NINDS-UM1NS132207-green.svg)](https://reporter.nih.gov/project-details/11411328)
+[![NIH-NIBIB-R01EB029272](https://img.shields.io/badge/NIH_NIBIB-R01EB029272-green.svg)](https://reporter.nih.gov/project-details/10262925)
+[![NIH-NIBIB-R01EB030896](https://img.shields.io/badge/NIH_NIBIB-R01EB030896-green.svg)](https://reporter.nih.gov/project-details/10428625)
+[![NIH-NIMH-R01MH126699](https://img.shields.io/badge/NIH_NIMH-R01MH126699-green.svg)](https://reporter.nih.gov/project-details/10460628)
+[![NIH-NIDCD-R01DC020088](https://img.shields.io/badge/NIH_NIDCD-R01DC020088-green.svg)](https://reporter.nih.gov/project-details/11140284)
+[![NSF-BCS-1734853](https://img.shields.io/badge/NSF_BCS-1734853-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1734853)
+[![NSF-BCS-2203524](https://img.shields.io/badge/NSF_BCS-2203524-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2203524)
+[![NSF-IIS-1636893](https://img.shields.io/badge/NSF_IIS-1636893-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1636893)
+[![NSF-OAC-2148729](https://img.shields.io/badge/NSF_OAC-2148729-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2148729)
+[![NSF-IIS-1912270](https://img.shields.io/badge/NSF_IIS-1912270-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1912270)
+[![NSF-IIS-2148700](https://img.shields.io/badge/NSF_IIS-2148700-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2148700)
+[![NSF-OAC-1916518](https://img.shields.io/badge/NSF_OAC-1916518-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1916518)
 
-An empty setting, or a setting of 0 or 1 entails no inflation is performed.
+<sub>brainlife.io is publicly funded, and acknowledging that support helps keep it running. This App was developed with support from Wellcome, the U.S. National Institutes of Health (including the BRAIN Initiative BRAIN CONNECTS program: The Axonal Projectome EXchange, U24NS140384, and the Center for Mesoscale Connectomics, UM1NS132207) and the U.S. National Science Foundation.</sub>
 
-A setting with **an odd integer value** will apply a gaussian inflation with the specified **diameter**.  **EVEN VALUES WILL NOT WORK**
+## ⚖️ License
 
-## Output
-
-This app outputs a [standard ROI data output](https://brainlife.io/datatype/5be9ea0315a8683a39a1ebd9) in which the output ROI names are simply the (individual) input requests (i.e. lines) with a "ROI.nii.gz" appended to the end.
-
-#### Product.json
-
-Not relevant for this App as it does not genrate processed data. 
-
-### Dependencies
-
-This App only requires [singularity](https://www.sylabs.io/singularity/). If you don't have singularity, you will need to install following dependencies.  
-
-https://singularity.lbl.gov/docs-installation
-
-Alternatively, local use may require several local repositories including
-[wma_tools](https://github.com/DanNBullock/WiMSE)
-[vistasoft](https://github.com/vistalab/vistasoft)
-[spm](https://github.com/spm/spm12)
+MIT.
